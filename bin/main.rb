@@ -17,3 +17,20 @@ if tutorial == 'Y'
 else
   puts "Nice, let's start the game!"
 end
+
+puts board
+
+puts 'Please make a move, choose a number'
+player_move = gets.chomp
+
+def announce_winner(player_name)
+    "Congratulations #{player_name}! You are the winner"
+end
+
+winner = true
+
+if winner 
+    announce_winner(player_name)
+    break
+end
+
