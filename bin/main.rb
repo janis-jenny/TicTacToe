@@ -4,7 +4,7 @@ choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 def player_Choice(choices, player_name)
   display_Board(choices)
-  puts 'Please make a move, choose a number: '
+  print 'Please make a move, choose a number: '
   player_move = gets.chomp 
   player_move = player_move.to_i
   player_move -= 1
@@ -13,11 +13,13 @@ def player_Choice(choices, player_name)
 end
 
 def display_Board(choices)
+  puts ''
   puts " #{choices[0]}  | #{choices[1]}  | #{choices[2]}  "
-  puts '-----------'
+  puts '--------------'
   puts " #{choices[3]}  | #{choices[4]}  | #{choices[5]}  "
-  puts '-----------'
+  puts '--------------'
   puts " #{choices[6]}  | #{choices[7]}  | #{choices[8]}  "
+  puts ''
 end
 
 def check_Move(player_move, choices, player_name)
@@ -30,12 +32,15 @@ def check_Move(player_move, choices, player_name)
     display_Board(choices)
     puts 'Invalid move! Choose another number: '
     player_move = gets.chomp
+    player_move = player_move.to_i
+    player_move -= 1
     check_Move(player_move, choices, player_name)
   end
 end
 
 def computer_Choice(choices, player_name)
   computer_choice = rand(1..9)
+  puts "The computer has chosen number #{computer_choice}!"
   computer_choice -= 1
   check_computer_Move(computer_choice, choices, player_name)
 end
