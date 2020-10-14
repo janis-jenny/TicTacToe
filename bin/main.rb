@@ -61,7 +61,7 @@ def check_Winner(choices, player_name)
   winner = false
   if choices[0] == 'X' && choices[1] == 'X' && choices[2] == 'X'
     winner = true
-    announce_Winner(player_name, winner)
+    
     winner
   elsif choices[3] == 'X' && choices[4] == 'X' && choices[5] == 'X'
     winner = true
@@ -92,37 +92,38 @@ def check_Winner(choices, player_name)
     announce_Winner(player_name, winner)
     winner
   else
+    win_condition = false
     if choices[0] == 'O' && choices[1] == 'O' && choices[2] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     elsif choices[3] == 'O' && choices[4] == 'O' && choices[5] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     elsif choices[6] == 'O' && choices[7] == 'O' && choices[8] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     elsif choices[0] == 'O' && choices[3] == 'O' && choices[6] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     elsif choices[0] == 'O' && choices[4] == 'O' && choices[8] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     elsif choices[1] == 'O' && choices[4] == 'O' && choices[7] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     elsif choices[2] == 'O' && choices[5] == 'O' && choices[8] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     elsif choices[2] == 'O' && choices[4] == 'O' && choices[6] == 'O'
-      winner = false
-      announce_Winner(player_name, winner)
+      winner = true
+      announce_Winner(player_name, win_condition)
       winner
     else
       return winner
@@ -141,12 +142,20 @@ end
 def game_Engine(choices, player_name)
   current_choices = choices
   run = false
-  while !run
+  count = 1
+  while !run && count < 5
     current_choices = player_Choice(current_choices, player_name)
     current_choices = computer_Choice(current_choices, player_name)
+    count += 1
     if check_Winner(choices, player_name)
       run = true
+      display_Board(choices)
     end
+  end
+  if run == false
+    current_choices = computer_Choice(current_choices, player_name)
+    display_Board(choices)
+    puts "It's a draw"
   end
 end
 
