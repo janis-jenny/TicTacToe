@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# rubocop:disable Metrics/MethodLength
 
 choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -62,14 +61,9 @@ end
 # Method created to check if any win conditions were met.
 def check_winner(player_name, choices)
   myarr = [
-    [choices[0], choices[1], choices[2]],
-    [choices[3], choices[4], choices[5]],
-    [choices[6], choices[7], choices[8]],
-    [choices[0], choices[3], choices[6]],
-    [choices[0], choices[4], choices[8]],
-    [choices[1], choices[4], choices[7]],
-    [choices[2], choices[5], choices[8]],
-    [choices[2], choices[4], choices[6]]
+    [choices[0], choices[1], choices[2]], [choices[3], choices[4], choices[5]], [choices[6], choices[7], choices[8]],
+    [choices[0], choices[3], choices[6]], [choices[0], choices[4], choices[8]], [choices[1], choices[4], choices[7]],
+    [choices[2], choices[5], choices[8]], [choices[2], choices[4], choices[6]]
   ]
 
   simbol1 = 'X'
