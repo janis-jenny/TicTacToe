@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
-# rubocop:disable Style/GlobalVars, Metrics/MethodLength
+# rubocop:disable Metrics/MethodLength
 
-$choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 # Method created to receive player's input.
 def player_choice(choices)
-  display_board($choices)
+  display_board(choices)
   valid_move = false
   while valid_move == false
     print 'Please make a move, choose a number: '
     player_move = gets.chomp.to_i - 1
-    valid_move = check_move(player_move, 'X')
+    valid_move = check_move(player_move, 'X', choices)
   end
   choices
 end
@@ -27,32 +27,32 @@ def display_board(choices)
 end
 
 # Method created to check if the player move is valid!
-def check_move(move, simbol)
-  if $choices[move] != 'X' && $choices[move] != 'O'
+def check_move(move, simbol, choices)
+  if choices[move] != 'X' && choices[move] != 'O'
     puts 'Valid move!'
-    $choices[move] = simbol
+    choices[move] = simbol
     true
   else
-    display_board($choices)
+    display_board(choices)
     puts 'Invalid move!'
     false
   end
 end
 
 # Method created to randomize a computer move.
-def computer_choice
+def computer_choice(choices)
   valid_move = false
   while valid_move == false
     computer_choice = rand(0..8)
-    valid_move = check_computer_move(computer_choice, 'O')
+    valid_move = check_computer_move(computer_choice, 'O', choices)
   end
 end
 
 # Method created to check if the computer move is valid!
-def check_computer_move(move, simbol)
-  if $choices[move] != 'X' && $choices[move] != 'O'
+def check_computer_move(move, simbol, choices)
+  if choices[move] != 'X' && choices[move] != 'O'
     puts "The computer has chosen number #{move + 1}!"
-    $choices[move] = simbol
+    choices[move] = simbol
     true
   else
     false
@@ -60,7 +60,7 @@ def check_computer_move(move, simbol)
 end
 
 # Method created to check if any win conditions were met.
-def check_winner(choices)
+def check_winner(player_name, choices)
   myarr = [
     [choices[0], choices[1], choices[2]],
     [choices[3], choices[4], choices[5]],
@@ -76,8 +76,15 @@ def check_winner(choices)
   simbol2 = 'O'
 
   myarr.each do |combination|
-    return true if combination.all?(simbol1)
-    return true if combination.all?(simbol2)
+    if combination.all?(simbol1)
+      display_board(choices)
+      announce_winner(player_name, true)
+      return true
+    elsif combination.all?(simbol2)
+      display_board(choices)
+      announce_winner(player_name, false)
+      return true
+    end
   end
   false
 end
@@ -92,24 +99,17 @@ def announce_winner(player_name, win_condition)
 end
 
 # Main method created to control the game loop!
-def game_engine(player_name)
+def game_engine(player_name, choices)
   count = 1
   control = false
   while count < 6 && !control
-    player_choice($choices)
-    if check_winner($choices)
-      control = true
-      display_board($choices)
-      announce_winner(player_name, control)
-    elsif count < 5 && !control
-      computer_choice
-      if check_winner($choices)
-        display_board($choices)
-        announce_winner(player_name, control)
-        control = true
-      end
-    else
-      display_board($choices)
+    player_choice(choices)
+    control = check_winner(player_name, choices)
+    if count < 5 && !control
+      computer_choice(choices)
+      control = check_winner(player_name, choices)
+    elsif !control
+      display_board(choices)
       puts "It's a draw"
     end
     count += 1
@@ -136,4 +136,4 @@ if tutorial == 'Y'
 else
   puts "Nice, let's start the game!"
 end
-game_engine(player_name)
+game_engine(player_name, choices)
