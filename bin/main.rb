@@ -62,42 +62,22 @@ def computer_choice(choices, player_name)
 # end
 
 # Method created to check if any win conditions were met.
-def check_winner(choices)
-  winner = false
-  if choices[0] == 'X' && choices[1] == 'X' && choices[2] == 'X'
-    winner = true
-  elsif choices[3] == 'X' && choices[4] == 'X' && choices[5] == 'X'
-    winner = true
-  elsif choices[6] == 'X' && choices[7] == 'X' && choices[8] == 'X'
-    winner = true
-  elsif choices[0] == 'X' && choices[3] == 'X' && choices[6] == 'X'
-    winner = true
-  elsif choices[0] == 'X' && choices[4] == 'X' && choices[8] == 'X'
-    winner = true
-  elsif choices[1] == 'X' && choices[4] == 'X' && choices[7] == 'X'
-    winner = true
-  elsif choices[2] == 'X' && choices[5] == 'X' && choices[8] == 'X'
-    winner = true
-  elsif choices[2] == 'X' && choices[4] == 'X' && choices[6] == 'X'
-    winner = true
-  elsif choices[0] == 'O' && choices[1] == 'O' && choices[2] == 'O'
-    winner = true
-  elsif choices[3] == 'O' && choices[4] == 'O' && choices[5] == 'O'
-    winner = true
-  elsif choices[6] == 'O' && choices[7] == 'O' && choices[8] == 'O'
-    winner = true
-  elsif choices[0] == 'O' && choices[3] == 'O' && choices[6] == 'O'
-    winner = true
-  elsif choices[0] == 'O' && choices[4] == 'O' && choices[8] == 'O'
-    winner = true
-  elsif choices[1] == 'O' && choices[4] == 'O' && choices[7] == 'O'
-    winner = true
-  elsif choices[2] == 'O' && choices[5] == 'O' && choices[8] == 'O'
-    winner = true
-  elsif choices[2] == 'O' && choices[4] == 'O' && choices[6] == 'O'
-    winner = true
-  end
-  winner
+def check_winner(choices, simbol)
+  myarr = [
+    [choices[0], choices[1], choices[2]],
+    [choices[3], choices[4], choices[5]],
+    [choices[6], choices[7], choices[8]],
+    [choices[0], choices[3], choices[6]],
+    [choices[0], choices[4], choices[8]],
+    [choices[1], choices[4], choices[7]],
+    [choices[2], choices[5], choices[8]],
+    [choices[2], choices[4], choices[6]],
+  ]
+
+  myarr.each do |combination|
+    return true if combination.all?(simbol)
+  end 
+  false 
 end
 
 # Method created to announce the winner.
