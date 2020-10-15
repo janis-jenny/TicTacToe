@@ -1,16 +1,18 @@
 #!/usr/bin/env ruby
 # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/MethodLength, Style/GuardClause
 
-choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+$choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 # Method created to receive player's input.
 def player_choice(choices, player_name)
-  display_board(choices)
-  print 'Please make a move, choose a number: '
-  player_move = gets.chomp
-  player_move = player_move.to_i
-  player_move -= 1
-  choices = check_move(player_move, choices, player_name)
+  display_board($choices)
+  valid_move = false
+  while valid_move == false
+    print 'Please make a move, choose a number: '
+    player_move = (gets.chomp.to_i) -1
+    valid_move = check_move(player_move, 'X')
+  end
+  
   choices
 end
 
@@ -26,40 +28,38 @@ def display_board(choices)
 end
 
 # Method created to check if the player move is valid!
-def check_move(player_move, choices, player_name)
-  if choices[player_move] != 'X' && choices[player_move] != 'O'
+def check_move(move, simbol)
+  if $choices[move] != 'X' && $choices[move] != 'O'
     puts 'Valid move!'
-    choices[player_move] = 'X'
-    choices
+    $choices[move] = simbol
+    true 
   else
-    display_board(choices)
+    display_board($choices)
     print 'Invalid move! Choose another number: '
-    player_move = gets.chomp
-    player_move = player_move.to_i
-    player_move -= 1
-    check_move(player_move, choices, player_name)
+    false
   end
 end
 
 # Method created to randomize a computer move.
 def computer_choice(choices, player_name)
-  computer_choice = rand(1..9)
-  computer_choice -= 1
-  check_computer_move(computer_choice, choices, player_name)
-end
+  valid_move = false
+  while valid_move == false
+    computer_choice = rand(0..8) 
+    valid_move = check_move(computer_choice, 'O')
+  end
+  end
 
 # Method created to check if the computer move is valid!
-def check_computer_move(computer_move, choices, player_name)
-  if choices[computer_move] != 'X' && choices[computer_move] != 'O'
-    choices[computer_move] = 'O'
-    puts "The computer has chosen number #{computer_move + 1}!"
-    choices
-  else
-    computer_move = rand(1..9)
-    computer_move -= 1
-    check_computer_move(computer_move, choices, player_name)
-  end
-end
+# def check_computer_move(computer_move, choices, player_name)
+#   if choices[computer_move] != 'X' && choices[computer_move] != 'O'
+#     choices[computer_move] = 'O'
+#     puts "The computer has chosen number #{computer_move + 1}!"
+#     choices
+#   else
+#     computer_move = rand(0..8)
+#     check_computer_move(computer_move, choices, player_name)
+#   end
+# end
 
 # Method created to check if any win conditions were met.
 def check_winner(choices)
@@ -110,21 +110,21 @@ def announce_winner(player_name, win_condition)
 end
 
 # Main method created to control the game loop!
-def game_engine(choices, player_name)
-  current_choices = choices
+def game_engine(player_name)
+  current_choices = $choices
   count = 1
   control = false
   while count < 6 && !control
     current_choices = player_choice(current_choices, player_name)
-    if check_winner(choices)
+    if check_winner($choices)
       control = true
-      display_board(choices)
+      display_board($choices)
       announce_winner(player_name, control)
     end
     if count < 5 && !control
       current_choices = computer_choice(current_choices, player_name)
-      if check_winner(choices)
-        display_board(choices)
+      if check_winner($choices)
+        display_board($choices)
         announce_winner(player_name, control)
         control = true
       end
@@ -157,4 +157,4 @@ if tutorial == 'Y'
 else
   puts "Nice, let's start the game!"
 end
-game_engine(choices, player_name)
+game_engine(player_name)
