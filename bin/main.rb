@@ -2,16 +2,15 @@
 
 choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-# Method created to receive player's input.
-def player_choice(choices)
-  display_board(choices)
-  valid_move = false
-  while valid_move == false
-    print 'Please make a move, choose a number: '
-    player_move = gets.chomp.to_i - 1
-    valid_move = check_move(player_move, 'X', choices)
+class Player
+  def initialize(name)
+    @name = name
   end
-  choices
+
+  def move(current_move, choices)
+    current_move = current_move.to_i - 1
+    return check_move(current_move, 'X', choices)
+  end
 end
 
 # Display board Method, updates automatically after every move.
@@ -23,6 +22,17 @@ def display_board(choices)
   puts '--------------'
   puts " #{choices[6]}  | #{choices[7]}  | #{choices[8]}  "
   puts ''
+end
+
+# Method created to receive player's input.
+def player_choice(player_name, choices)
+  display_board(choices)
+  valid_move = false
+  while valid_move == false
+    print 'Please make a move, choose a number: '
+    valid_move = player_name.move(gets.chomp, choices)
+  end
+  choices
 end
 
 # Method created to check if the player move is valid!
@@ -97,7 +107,7 @@ def game_engine(player_name, choices)
   count = 1
   control = false
   while count < 6 && !control
-    player_choice(choices)
+    player_choice(player_name, choices)
     control = check_winner(player_name, choices)
     if count < 5 && !control
       computer_choice(choices)
@@ -112,8 +122,8 @@ end
 
 # Program Start!
 print 'What is your name? '
-player_name = gets.chomp
-puts "Welcome #{player_name}!"
+player = Player.new(gets.chomp)
+puts "Welcome #{player}!"
 print 'Is it your first time playing tic-tac-toe? [Y]es [N]o? '
 tutorial = gets.chomp
 tutorial = tutorial.upcase
