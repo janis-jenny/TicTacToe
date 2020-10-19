@@ -3,13 +3,22 @@
 choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 class Player
+  attr_reader :name
+
   def initialize(name)
     @name = name
   end
 
   def move(current_move, choices)
     current_move = current_move.to_i - 1
-    return check_move(current_move, 'X', choices)
+    check_move(current_move, 'X', choices)
+  end
+end
+
+class Computer
+  def move(choices)
+    computer_choice = rand(0..8)
+    check_computer_move(computer_choice, 'O', choices)
   end
 end
 
@@ -49,11 +58,10 @@ def check_move(move, simbol, choices)
 end
 
 # Method created to randomize a computer move.
-def computer_choice(choices)
+def computer_choice(computer, choices)
   valid_move = false
   while valid_move == false
-    computer_choice = rand(0..8)
-    valid_move = check_computer_move(computer_choice, 'O', choices)
+    valid_move = computer.move(choices)
   end
 end
 
@@ -103,15 +111,15 @@ def announce_winner(player_name, win_condition)
 end
 
 # Main method created to control the game loop!
-def game_engine(player_name, choices)
+def game_engine(player, computer, choices)
   count = 1
   control = false
   while count < 6 && !control
-    player_choice(player_name, choices)
-    control = check_winner(player_name, choices)
+    player_choice(player, choices)
+    control = check_winner(player.name, choices)
     if count < 5 && !control
-      computer_choice(choices)
-      control = check_winner(player_name, choices)
+      computer_choice(computer, choices)
+      control = check_winner(player.name, choices)
     elsif !control
       display_board(choices)
       puts "It's a draw"
@@ -123,7 +131,8 @@ end
 # Program Start!
 print 'What is your name? '
 player = Player.new(gets.chomp)
-puts "Welcome #{player}!"
+computer = Computer.new
+puts "Welcome #{player.name}!"
 print 'Is it your first time playing tic-tac-toe? [Y]es [N]o? '
 tutorial = gets.chomp
 tutorial = tutorial.upcase
@@ -140,4 +149,5 @@ if tutorial == 'Y'
 else
   puts "Nice, let's start the game!"
 end
-game_engine(player_name, choices)
+
+game_engine(player, computer, choices)
