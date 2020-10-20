@@ -1,29 +1,29 @@
 #!/usr/bin/env ruby
-require_relative "../lib/game_logic.rb"
-require_relative "../lib/player.rb"
-require_relative "../lib/computer.rb"
+require_relative '../lib/game_logic.rb'
+require_relative '../lib/player.rb'
+require_relative '../lib/computer.rb'
 
 def display_board(choices) # define the funtion first to avoid undefine error when it is called
-    puts ''
-    puts " #{choices[0]}  | #{choices[1]}  | #{choices[2]}  "
-    puts '--------------'
-    puts " #{choices[3]}  | #{choices[4]}  | #{choices[5]}  "
-    puts '--------------'
-    puts " #{choices[6]}  | #{choices[7]}  | #{choices[8]}  "
-    puts ''
+  puts ''
+  puts " #{choices[0]}  | #{choices[1]}  | #{choices[2]}  "
+  puts '--------------'
+  puts " #{choices[3]}  | #{choices[4]}  | #{choices[5]}  "
+  puts '--------------'
+  puts " #{choices[6]}  | #{choices[7]}  | #{choices[8]}  "
+  puts ''
 end
-#game.board ---> shows the board first time from game_logic
+# game.board ---> shows the board first time from game_logic
 
 def player_choice(choices)
-    display_board(choices)
-    
-    choices
-  end
-#Create the instances variables of the class // computer = computer.name it is the name of the variable it is brought here w the attr_reader
+  display_board(choices)
+
+  choices
+end
+# Create the instances variables of the class // computer = computer.name it is the name of the variable it is brought here w the attr_reader
 game = Game.new
 
 computer = Computer.new
-#computer.name = "Jenny" ---> it cant change cause we used attr_reader
+# computer.name = "Jenny" ---> it cant change cause we used attr_reader
 
 # Ask the player's name
 print 'What is your name? '
@@ -33,8 +33,6 @@ puts "Welcome #{player.name}!"
 print 'Is it your first time playing tic-tac-toe? [Y]es [N]o? '
 tutorial = gets.chomp
 tutorial = tutorial.upcase
-
-player = Player.new(player_name)
 
 # If the user never played before, it displays a fast tutorial.
 if tutorial == 'Y'
@@ -48,48 +46,45 @@ if tutorial == 'Y'
 else
   puts "Nice, let's start the game!"
 end
- 
+
 # Main method created to control the game loop!
 count = 1
-  control = false
-  
-  while count < 6 && !control
-    display_board(game.board) #it recieves the board
-    valid_move = false
-    while valid_move == false
-      print 'Please make a move, choose a number: '
-      player_move = gets.chomp.to_i - 1
-      valid_move = game.check_move(player_move, 'X')
-      if valid_move == false
-        puts "Try again"
-      end
-    end
-    control = game.check_winner(player.name, "X")
-    
-    if control == true
-      display_board
-      print "Player won!"
-      break
-    end
-  
-    if count < 5 && !control
-      valid_move = false
-      while valid_move == false
-        computer_choice = computer.computer_move() #you check if is a valid move here, u call in the computer_choice the class computer, that returns a number and then u check if that number is valid w the class game, cause u send there the number and the simbol of the computer
-        valid_move = game.check_move(computer_choice, 'O')
-      end
-      control = game.check_winner(computer.name, "O")
-      if control == true
-        print "Computer won!"
-        break
-      end
-    elsif !control
-      display_board(choices)
-      puts "It's a draw"
-    end
-    count += 1
+control = false
+
+while count < 6 && !control
+  display_board(game.board) # it recieves the board
+  valid_move = false
+  while valid_move == false
+    print 'Please make a move, choose a number: '
+    player_move = gets.chomp.to_i - 1
+    valid_move = game.check_move(player_move, 'X')
+    puts 'Try again' if valid_move == false
+  end
+  control = game.check_winner(player.name, 'X')
+
+  if control == true
+    display_board(game.board)
+    print 'Player won!'
+    break
   end
 
+  if count < 5 && !control
+    valid_move = false
+    while valid_move == false
+      computer_choice = computer.computer_move # you check if is a valid move here, u call in the computer_choice the class computer, that returns a number and then u check if that number is valid w the class game, cause u send there the number and the simbol of the computer
+      valid_move = game.check_move(computer_choice, 'O')
+    end
+    control = game.check_winner(computer.name, 'O')
+    if control == true
+      print 'Computer won!'
+      break
+    end
+  elsif !control
+    display_board(choices)
+    puts "It's a draw"
+  end
+  count += 1
+end
 
 # choices = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
