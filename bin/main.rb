@@ -27,8 +27,9 @@ computer = Computer.new
 
 # Ask the player's name
 print 'What is your name? '
-player_name = gets.chomp
-puts "Welcome #{player_name}!"
+player = Player.new(gets.chomp)
+computer = Computer.new
+puts "Welcome #{player.name}!"
 print 'Is it your first time playing tic-tac-toe? [Y]es [N]o? '
 tutorial = gets.chomp
 tutorial = tutorial.upcase
