@@ -20,6 +20,7 @@ def move(player_name, player_simbol, game)
     print "#{player_name}, please make a move, choose a number: "
     player_move = gets.chomp.to_i - 1
     valid_move = game.check_move(player_move, player_simbol)
+    puts 'Invalid move!' if valid_move == false || !player_move.is_a?(Integer) || player_move.negative?
   end
   display_board(game.board)
   control = game.check_winner(player_simbol)
@@ -29,16 +30,16 @@ end
 game = Game.new
 
 print 'What is player 1 name? '
-player = Player.new(gets.chomp)
+player = Player.new(gets.chomp, 'X')
 while player.name.length.zero?
   puts 'Enter a valid name for player 1: '
-  player = Player.new(gets.chomp)
+  player = Player.new(gets.chomp, 'X')
 end
 print 'What is player 2 name? '
-player2 = Player.new(gets.chomp)
+player2 = Player.new(gets.chomp, 'O')
 while player2.name.length.zero?
   puts 'Enter a valid name for player 2: '
-  player2 = Player.new(gets.chomp)
+  player2 = Player.new(gets.chomp, 'O')
 end
 puts "Welcome #{player.name} and #{player2.name}!"
 print 'Is it your first time playing tic-tac-toe? [Y]es [N]o? '
