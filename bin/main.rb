@@ -55,15 +55,7 @@ control = false
 display_board(game.board)
 
 while count < 6 && !control
-  valid_move = false
-  player_move = -1
-  while valid_move == false || !player_move.is_a?(Integer) || player_move.negative?
-    print "#{player.name}, please make a move, choose a number: "
-    player_move = gets.chomp.to_i - 1
-    valid_move = game.check_move(player_move, 'X')
-  end
-  display_board(game.board)
-  control = game.check_winner(player.name, 'X')
+  control = game.move(player.name, 'X', game)
 
   if control == true
     print "#{player.name} won!"
@@ -71,15 +63,8 @@ while count < 6 && !control
   end
 
   if count < 5 && !control
-    valid_move = false
-    player_move = -1
-    while valid_move == false || !player_move.is_a?(Integer) || player_move.negative?
-      print "#{player2.name}, please make a move, choose a number: "
-      player_move = gets.chomp.to_i - 1
-      valid_move = game.check_move(player_move, 'O')
-    end
-    display_board(game.board)
-    control = game.check_winner(player2.name, 'O')
+    control = game.move(player2.name, 'O', game)
+
     if control == true
       print "#{player2.name} won!"
       break
