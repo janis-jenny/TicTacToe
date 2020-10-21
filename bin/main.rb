@@ -16,11 +16,11 @@ end
 def move(player_name, player_simbol, game)
   valid_move = false
   player_move = -1
-  while valid_move == false || !player_move.is_a?(Integer) || player_move.negative?
+  while valid_move == false
     print "#{player_name}, please make a move, choose a number: "
     player_move = gets.chomp.to_i - 1
     valid_move = game.check_move(player_move, player_simbol)
-    puts 'Invalid move!' if valid_move == false || !player_move.is_a?(Integer) || player_move.negative?
+    puts 'Invalid move!' unless valid_move == true
   end
   display_board(game.board)
   control = game.check_winner(player_simbol)
