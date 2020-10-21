@@ -16,7 +16,7 @@ end
 def move(player_name, player_simbol, game)
   valid_move = false
   player_move = -1
-  while valid_move == false
+  while valid_move == false || !player_move.is_a?(Integer) || player_move.negative?
     print "#{player_name}, please make a move, choose a number: "
     player_move = gets.chomp.to_i - 1
     valid_move = game.check_move(player_move, player_simbol)
