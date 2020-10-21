@@ -2,7 +2,6 @@
 
 require_relative '../lib/game_logic.rb'
 require_relative '../lib/player.rb'
-require_relative '../lib/computer.rb'
 
 def display_board(choices)
   puts ''
@@ -36,10 +35,10 @@ while player.name.length.zero?
   player = Player.new(gets.chomp)
 end
 print 'What is player 2 name? '
-player2 = Computer.new(gets.chomp)
+player2 = Player.new(gets.chomp)
 while player2.name.length.zero?
   puts 'Enter a valid name for player 2: '
-  player2 = Computer.new(gets.chomp)
+  player2 = Player.new(gets.chomp)
 end
 puts "Welcome #{player.name} and #{player2.name}!"
 print 'Is it your first time playing tic-tac-toe? [Y]es [N]o? '
