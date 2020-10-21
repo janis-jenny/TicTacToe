@@ -28,9 +28,17 @@ computer = Computer.new
 # computer.name = "Jenny" ---> it cant change cause we used attr_reader
 
 # Ask the player's name
-print 'What is your name? '
-player = Player.new(gets.chomp)
-puts "Welcome #{player.name}!"
+print 'What is your name player 1? '
+player1 = Player.new(gets.chomp)
+until player1.valid_player_name(player1.name)
+  puts "Try again."
+  player1 = Player.new(gets.chomp)
+end
+puts "Welcome #{player1.name}!"
+print 'What is your name player 2? '
+player2 = Player.new(gets.chomp)
+
+puts "Welcome #{player2.name}!"
 print 'Is it your first time playing tic-tac-toe? [Y]es [N]o? '
 tutorial = gets.chomp
 tutorial = tutorial.upcase
@@ -84,7 +92,7 @@ while count < 6 && !control
       break
     end
   elsif !control
-    display_board(choices)
+    display_board(game.board)
     puts "It's a draw"
   end
   count += 1
