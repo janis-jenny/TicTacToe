@@ -5,7 +5,7 @@ class Game
   end
 
   def check_move(move, simbol)
-    if @board[move] != 'X' && @board[move] != 'O'
+    if @board[move] != 'X' && @board[move] != 'O' && !move.negative?
 
       @board[move] = simbol
       true
@@ -29,7 +29,3 @@ class Game
     false
   end
 end
-# u ask to the class if the combination is valid or not it will return
-# true or false but in main.rb u check that and it will respond if the player won or not
-# u are grouping logic u can show here puts or print that goes on main,
-# u ask something to the class if it won or not fot the games rules there
