@@ -62,7 +62,6 @@ while count < 6 && !control
     print "#{player.name}, please make a move, choose a number: "
     player_move = gets.chomp.to_i - 1
     valid_move = game.check_move(player_move, 'X')
-    puts "#{player.name}, invalid move!" unless valid_move
   end
   display_board(game.board)
   control = game.check_winner(player.name, 'X')
@@ -79,7 +78,6 @@ while count < 6 && !control
       print "#{player2.name}, please make a move, choose a number: "
       player_move = gets.chomp.to_i - 1
       valid_move = game.check_move(player_move, 'O')
-      puts "#{player2.name}, invalid move!" unless valid_move
     end
     display_board(game.board)
     control = game.check_winner(player2.name, 'O')
