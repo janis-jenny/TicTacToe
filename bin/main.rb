@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# rubocop:disable Metrics/BlockNesting
 
 require_relative '../lib/game_logic.rb'
 require_relative '../lib/player.rb'
