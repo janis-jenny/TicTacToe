@@ -14,7 +14,14 @@
 5 - When all 9 squares are full, the game is over.<br/>
 6 - If no player has 3 marks in a row, the game ends in a tie.<br/>
 7 - Alright! Now you are able to continue, let's start the game!<br/>
-Click [HERE](https://TicTacToe-2.jonathastavares.repl.run) to start the TicTacToe!
+Click [HERE](https://TicTacToe-2.jonathastavares.repl.run) to start the TicTacToe!<br/>
+
+If you want to download the game to play it locally:
+>1 - [DOWNLOAD](https://github.com/janis-jenny/TicTacToe/archive/game_logic.zip) this respository.<br/>
+2 - Install [Ruby](https://ruby-doc.org/downloads/) on your computer.<br/>
+3 - Open a terminal.<br/>
+4 - Go to the folder where you unzip the game files.<br/>
+5 - Type bin/main.rb on the terminal.<br/>
 
 # TicTacToe Live Demo
 
