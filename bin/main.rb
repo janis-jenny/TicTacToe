@@ -14,9 +14,17 @@ def display_board(choices)
   puts ''
 end
 
-def player_choice(choices)
-  display_board(choices)
-  choices
+def move(player_name, player_simbol, game)
+  valid_move = false
+  player_move = -1
+  while valid_move == false || !player_move.is_a?(Integer) || player_move.negative?
+    print "#{player_name}, please make a move, choose a number: "
+    player_move = gets.chomp.to_i - 1
+    valid_move = game.check_move(player_move, player_simbol)
+  end
+  display_board(game.board)
+  control = game.check_winner(player_simbol)
+  control
 end
 
 game = Game.new
@@ -55,7 +63,7 @@ control = false
 display_board(game.board)
 
 while count < 6 && !control
-  control = game.move(player.name, 'X', game)
+  control = move(player.name, 'X', game)
 
   if control == true
     print "#{player.name} won!"
@@ -63,7 +71,7 @@ while count < 6 && !control
   end
 
   if count < 5 && !control
-    control = game.move(player2.name, 'O', game)
+    control = move(player2.name, 'O', game)
 
     if control == true
       print "#{player2.name} won!"
