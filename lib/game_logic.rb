@@ -5,7 +5,7 @@ class Game
   end
 
   def check_move(move, simbol)
-    if @board[move] != 'X' && @board[move] != 'O' && !move.negative? && move < 9
+    if @board[move] != 'X' && @board[move] != 'O' && !move.negative? && move < 9 && move.is_a?(Integer)
 
       @board[move] = simbol
       true
